@@ -1,0 +1,28 @@
+server:
+  port: 8836
+spring:
+  application:
+    name: gate-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true   # 开启从注册中心动态创建路由
+      routes:
+        # 路由1：路由到 provider 服务
+        - id: provider_route
+          uri: lb://spring-cloud-alibaba-provider-8001
+          predicates:
+            - Path=/provider/**
+          filters:
+            - StripPrefix=1   # 去掉第一层路径前缀
+        # 路由2：路由到 consumer 服务
+        - id: consumer_route
+          uri: lb://spring-cloud-alibaba-consumer-nacos-8801
+          predicates:
+            - Path=/consumer/**
+          filters:
+            - StripPrefix=1
