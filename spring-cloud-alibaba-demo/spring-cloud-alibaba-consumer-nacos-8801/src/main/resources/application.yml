@@ -1,0 +1,9 @@
+server:
+  port: 8801
+spring:
+  application:
+    name: spring-cloud-alibaba-consumer-nacos-8801
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
